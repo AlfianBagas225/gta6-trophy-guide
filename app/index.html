@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Roadmap Planner — GTA 6 Platinum Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Leonida Roadmap Planner</h1>
+    <p class="sub">The platinum roadmap for Grand Theft Auto VI — 55 PlayStation 5 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden. Names, descriptions and grades as PlayStation publishes them (via Exophase and PSNProfiles); every guide is written for this entry from the official description, and no place or step is pinned down where the description does not give one.</p>
+  </div>
+  <div class="progress-box" id="progressBox">
+    <div class="big-count"><span id="earnedCount">0</span><span class="of">/ 55 earned</span></div>
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+    <p class="progress-note" id="progressNote">Platinum: Vice Got a Price! — earn the other 54.</p>
+  </div>
+</header>
+
+<nav class="views" aria-label="Views">
+  <button type="button" class="view-btn" data-view="tracker" id="viewTracker">Tracker</button>
+  <button type="button" class="view-btn" data-view="roadmap" id="viewRoadmap">Platinum Roadmap</button>
+  <button type="button" class="view-btn" data-view="missable" id="viewMissable">Missable Watch</button>
+</nav>
+
+<section class="toolbar" aria-label="Tracker controls">
+  <label class="search-label">Search <input id="search" type="search" placeholder="Trophy name or description…" autocomplete="off"></label>
+  <div class="kinds" id="kindPills" role="group" aria-label="Filter by kind">
+    <button type="button" data-kind="all" class="pill on">All kinds</button>
+    <button type="button" data-kind="story" class="pill">Story</button>
+    <button type="button" data-kind="missable" class="pill">Missable</button>
+    <button type="button" data-kind="collectibles" class="pill">Collectibles</button>
+    <button type="button" data-kind="activities" class="pill">Activities</button>
+    <button type="button" data-kind="online" class="pill">Online</button>
+  </div>
+  <label>Grade <select id="grade">
+    <option value="all">All grades</option>
+    <option value="platinum">Platinum</option>
+    <option value="gold">Gold</option>
+    <option value="silver">Silver</option>
+    <option value="bronze">Bronze</option>
+  </select></label>
+  <label class="spoiler-label"><input id="spoiler" type="checkbox"> Spoiler mode — hide story names until earned</label>
+  <button id="export" type="button">Export progress</button>
+  <label class="import-label">Import progress <input id="import" type="file" accept="application/json"></label>
+  <span class="shown" id="shownCount"></span>
+</section>
+
+<main>
+  <section class="roadmap" id="roadmapSection" aria-label="Platinum roadmap">
+    <h2>Platinum roadmap</h2>
+    <p class="roadmap-intro">Play in stage order. Story stages first — the point-of-no-return flags sit there — then the one-chance moments, then cleanup and the long grinds. Each stage shows its trophies and how many you have earned.</p>
+    <ol class="stages" id="stages"></ol>
+    <div class="ponr">
+      <h3>Point-of-no-return flags</h3>
+      <p>31 trophies are flagged missable: the 17 story chapter, mission and character-finale trophies, and 14 one-chance moments. Rule of thumb: <strong>finish a chapter's flagged trophies before the chapter ends, and do a flagged moment the first time it appears</strong> — do not assume a later replay will re-award it. The Missable Watch view lists all 31 in one place.</p>
+    </div>
+  </section>
+
+  <section class="list-wrap" aria-label="Trophy checklist">
+    <h2 id="listHeading">Checklist</h2>
+    <ul class="trophy-list" id="trophyList"></ul>
+    <p class="empty" id="emptyNote" hidden>No trophies match these filters. Try clearing the search or choosing another kind.</p>
+  </section>
+
+  <aside class="detail" id="detailPanel" aria-label="Trophy guide">
+    <h2>Guide</h2>
+    <div id="detailBody">
+      <p class="detail-empty">Select a trophy from the checklist to see its guide and its sources here.</p>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <p>Leonida Roadmap Planner — an unofficial, open guide. Grand Theft Auto VI and all game names are the property of their owners; this guide uses no Rockstar logo, artwork, box art or game screenshot. Sources: the official PlayStation trophy list via Exophase and PSNProfiles for every name, description, grade and count; each guide states its source beside it. Progress is saved in your browser only (localStorage) and never leaves your machine except when you export it yourself.</p>
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
