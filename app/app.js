@@ -242,6 +242,9 @@ function renderDetail() {
     c.textContent = "PSN tracks: " + t.count.toLocaleString("en-US");
     meta.append(c);
   }
+  const source = document.createElement("p");
+  source.className = "source";
+  source.textContent = "Source: " + t.source;
   const earned = document.createElement("p");
   earned.className = state.earned.has(t.id) ? "earned-line" : "";
   earned.textContent = state.earned.has(t.id) ? "Earned — ticked off in your tracker." : "Not earned yet.";
@@ -253,16 +256,10 @@ function renderDetail() {
     const warn = document.createElement("p");
     warn.className = "warn";
     warn.textContent = "Point-of-no-return warning: do this before its chapter or moment passes. If the moment is gone, a later replay may not re-award it.";
-    body.append(name, desc, meta, earned, warn, guideH, guide);
+    body.append(name, desc, meta, source, earned, warn, guideH, guide);
   } else {
-    body.append(name, desc, meta, earned, guideH, guide);
+    body.append(name, desc, meta, source, earned, guideH, guide);
   }
-  const sourceH = document.createElement("h3");
-  sourceH.textContent = "Sources";
-  const source = document.createElement("p");
-  source.className = "source";
-  source.textContent = t.source;
-  body.append(sourceH, source);
 }
 
 function syncControls() {
