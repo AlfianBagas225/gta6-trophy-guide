@@ -1,44 +1,45 @@
-# Leonida Roadmap Planner — GTA 6 Trophy Guide
+# Leonida Roadmap Planner
 
-[![gta6-trophy-guide-01](https://make.fun/badge/gta6-trophy-guide-01.svg)](https://make.fun/c/gta6-trophy-guide-01)
-[![Rank](https://make.fun/badge/gta6-trophy-guide-01/AlfianBagas225/gta6-trophy-guide/rank.svg)](https://make.fun/c/gta6-trophy-guide-01)
-[![Reward](https://make.fun/badge/gta6-trophy-guide-01/AlfianBagas225/gta6-trophy-guide/reward.svg)](https://make.fun/c/gta6-trophy-guide-01)
-
-An offline, open-source platinum roadmap and tracker for the 55 PlayStation 5 trophies of Grand Theft Auto VI. No build step, no network at run time: serve `app/` with any static server and open `app/index.html`.
+An offline trophy guide and tracker for Grand Theft Auto VI on PlayStation 5, built for the make.fun gta6-trophy-guide-01 bounty.
 
 ## What it is
 
-**Roadmap-first, not a flat table.** The guide is built around a 9-stage platinum roadmap: Chapters 1–4, the finale, story missions and character finales, the one-chance moments, cleanup (collectibles and 100% completion), and the activities and open-world grinds. Each stage shows its trophies and earned/total progress, and clicking a stage jumps to its next unearned trophy.
+A static web app, no build step, that covers all 55 official trophies — 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden — each with its official name, description and grade, and a guide written for this entry in my own words. The guides are built only from the official descriptions: where a description does not pin down a place or a step, the guide says so plainly instead of inventing one.
 
-**Tracker.** A checklist of all 55 trophies with official name, description, grade, kind, PSN count where PlayStation tracks one, and a missable flag. Progress saves in the browser (localStorage) and can be exported to a JSON file and imported back. Filters by kind (story, missable, collectibles, activities, online), by grade, and by text search. A spoiler toggle hides story trophy names and descriptions until they are earned.
+## What it does
 
-**Missable watch.** 31 trophies are flagged missable: the 17 story chapter, mission and character-finale trophies, and 14 one-chance moments. Each carries a point-of-no-return warning in its detail panel, and the Missable Watch view lists all 31 in one place. The rule the roadmap is built on: finish a chapter's flagged trophies before the chapter ends, and do a flagged moment the first time it appears.
+- **Tracker** — a checklist of all 55 trophies with a checkbox each. Progress is saved in the browser (localStorage), exportable to a JSON file and importable back.
+- **Filters** — search by name or description, filter by kind (story, missable, collectibles, activities, grind) and by grade.
+- **Spoiler mode** — hides the names and descriptions of hidden trophies until they are earned.
+- **Platinum roadmap** — nine stages in play order: the four story chapters, the finale and platinum, the named story missions and character finales, the fourteen one-chance moments, cleanup, and the open-world activities. Each stage shows its trophies and how many you have earned.
+- **Missable Watch** — all 31 flagged missable trophies in one place, with the point-of-no-return rule beside them.
+- **Guide panel** — click any trophy to read its guide. The source line sits right under the description and badges, before the guide heading: every fact comes from the official PlayStation trophy list as published via Exophase and PSNProfiles, and the guide is written from the official description alone.
+- **Shareable state** — the current view, filters, spoiler setting and open guide live in the URL hash, so a link reopens the same screen.
 
-**Detail panel.** Clicking any trophy opens its guide beside the list, with its sources named beside it.
-
-## The data — and what it does not claim
-
-Every trophy's name, description and grade is the official PlayStation list as published (via Exophase and PSNProfiles, frozen 2026-11-18): 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden. Counts are the targets the official descriptions state (42 Shooting Range challenges, 100 WAiNK locations, 52 areas of Leonida, and so on).
-
-Every guide is written for this entry, in our own words, from the official description alone. Where the description does not pin down a place or a step, the guide says so instead of inventing one — a cited, honest general guide beats a fabricated specific. Each guide names its source beside it: the official list via Exophase and PSNProfiles. Hidden flags mark the story and secret trophies PlayStation hides until earned; kinds and roadmap stages are built from the official descriptions. The game has no online trophies in its list, so the online filter correctly shows none.
-
-No Rockstar logo, official artwork, box art or game screenshot is used anywhere; the look is our own.
-
-## Use it
+## Running it
 
 ```sh
-node serve.ts        # serves app/ on http://localhost:8080
+node serve.ts
 ```
 
-State lives in the URL hash, so a link always shows the same view: `#view=roadmap`, `#view=missable`, `#filter=missable`, `#spoiler=on`, `#open=33`, `#grade=silver`.
+Then open http://localhost:8080 (or `node serve.ts --port <n>` for another port). It works with the network off: every file it loads sits under `app/`.
 
-## Hand it in
+## Handing it in
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-`main.ts` (Node 22, standard library only) copies `app/` and `screenshots/` to the output directory and writes `dossier.json` with the vendored make.fun library. Screenshots are real renders of the app in Chromium at 1280×800, taken with Playwright; `shots.json` records the view each one shows.
+`main.ts` copies `app/` and `screenshots/` to the output directory and writes `dossier.json` with the vendored make.fun library. Outside the grader, `MAKEFUN_OUTPUT_DIR` stands in for `/output`.
+
+## Files
+
+- `app/index.html`, `app/style.css`, `app/app.js` — the guide itself.
+- `app/data/trophies.json` — the 55 trophies with guides and sources.
+- `main.ts` — the hand-in program (Node 22, standard library only).
+- `serve.ts` — a small static server for local use.
+- `shots.json` — the manifest for the four screenshots in `screenshots/`.
+- `vendor/makefun-frontend.ts` — the kit's dossier library, unchanged.
 
 ## License
 
