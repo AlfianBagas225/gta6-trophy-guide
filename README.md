@@ -1,46 +1,58 @@
-# Leonida Roadmap Planner
+# Leonida Roadmap Planner — GTA 6 Trophy Guide & Tracker
 
-An offline trophy guide and tracker for Grand Theft Auto VI on PlayStation 5, built for the make.fun gta6-trophy-guide-01 bounty.
-
-## What it is
-
-A static web app, no build step, that covers all 55 official trophies — 1 platinum, 2 gold, 6 silver, 46 bronze, 28 hidden — each with its official name, description and grade, and a guide written for this entry in my own words. The guides are built only from the official descriptions: where a description does not pin down a place or a step, the guide says so plainly instead of inventing one.
+An offline web app that guides and tracks all 55 PlayStation 5 trophies of
+Grand Theft Auto VI: 1 platinum, 2 gold, 6 silver, 46 bronze; 28 hidden.
 
 ## What it does
 
-- **Tracker** — a checklist of all 55 trophies with a checkbox each. Progress is saved in the browser (localStorage), exportable to a JSON file and importable back.
-- **Filters** — search by name or description, filter by kind (story, missable, collectibles, activities, grind) and by grade.
-- **Spoiler mode** — hides the names and descriptions of hidden trophies until they are earned.
-- **Platinum roadmap** — nine stages in play order: the four story chapters, the finale and platinum, the named story missions and character finales, the fourteen one-chance moments, cleanup, and the open-world activities. Each stage shows its trophies and how many you have earned.
-- **Missable Watch** — all 31 flagged missable trophies in one place, with the point-of-no-return rule beside them.
-- **Guide panel** — click any trophy to read its guide. The source line sits right under the description and badges, before the guide heading: every fact comes from the official PlayStation trophy list as published via Exophase and PSNProfiles, and the guide is written from the official description alone.
-- **Shareable state** — the current view, filters, spoiler setting and open guide live in the URL hash, so a link reopens the same screen.
+- **Checklist** — every trophy with its official name, description and grade,
+  a checkbox saved in `localStorage`, and a detail pane with the guide and its
+  sources. Filters by kind (story 18 / activity 26 / collectible 6 / grind 5),
+  grade, missable-only, hide-earned, and free-text search.
+- **Roadmap to the platinum** — 9 stages in play order
+  (2 / 1 / 1 / 1 / 2 / 11 / 14 / 9 / 14 trophies), each with its own progress.
+- **Missable (31)** — every hidden trophy, plus three more whose character or
+  partner may not be around later, each with its roadmap stage.
+- **Spoiler-free story** — with the spoiler setting on, story trophies stay
+  hidden (name, description and guide) until earned.
+- **Export / import** — progress downloads as JSON and imports back.
+- **State in the URL hash** — view, filters, spoiler setting and the selected
+  trophy are all shareable links.
 
-## Running it
+## Sources and honesty
 
-```sh
-node serve.ts
+Each trophy's guide is written for this planner from its official description
+alone, and cites its sources directly under the description, before the guide:
+the Exophase GTA VI PS5 trophy list (official name, description, grade) and,
+where PlayStation tracks a count, PSNProfiles (e.g. 42 Shooting Range
+challenges, 500 choices for "Actions Speak Louder"). Where a description names
+no place or step, the guide says so instead of inventing one. No Rockstar
+Games logo or artwork is used; the look is our own.
+
+## Try it
+
+```
+node serve.ts   # then open http://localhost:8080
 ```
 
-Then open http://localhost:8080 (or `node serve.ts --port <n>` for another port). It works with the network off: every file it loads sits under `app/`.
+No build step, no network at run time: every file the app loads is under
+`app/`.
 
 ## Handing it in
 
-```sh
+```
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-`main.ts` copies `app/` and `screenshots/` to the output directory and writes `dossier.json` with the vendored make.fun library. Outside the grader, `MAKEFUN_OUTPUT_DIR` stands in for `/output`.
+`main.ts` copies `app/` and `screenshots/` to the output directory and writes
+`dossier.json` with the kit's vendored `vendor/makefun-frontend.ts`.
+Screenshots (4, first by name is the cover) are listed in `shots.json`.
 
 ## Files
 
-- `app/index.html`, `app/style.css`, `app/app.js` — the guide itself.
-- `app/data/trophies.json` — the 55 trophies with guides and sources.
-- `main.ts` — the hand-in program (Node 22, standard library only).
-- `serve.ts` — a small static server for local use.
-- `shots.json` — the manifest for the four screenshots in `screenshots/`.
-- `vendor/makefun-frontend.ts` — the kit's dossier library, unchanged.
-
-## License
-
-MIT — see `LICENSE`.
+- `app/index.html` — page shell: progress, views, toolbar
+- `app/style.css` — the night-drive look
+- `app/app.js` — data loading, filters, spoiler mode, storage, hash state
+- `app/data/trophies.json` — the 55 trophies (11 keys each: id, name,
+  description, grade, kind, missable, hidden, stage, count, guide, source)
+- `main.ts`, `serve.ts`, `shots.json`
