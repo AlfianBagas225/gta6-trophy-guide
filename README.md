@@ -6,59 +6,44 @@ Bounty: https://make.fun/bounty/gta6-trophy-guide-01
 
 # Leonida Roadmap Planner — GTA 6 Trophy Guide & Tracker
 
-An offline web app that guides and tracks all 55 PlayStation 5 trophies of
-Grand Theft Auto VI: 1 platinum, 2 gold, 6 silver, 46 bronze; 28 hidden.
+An offline guide and tracker for all 55 PlayStation 5 trophies of Grand Theft Auto VI. Static files under `app/`, no build step, no network at run time: open `app/index.html` in desktop Chrome with the network off and everything works.
 
 ## What it does
 
-- **Checklist** — every trophy with its official name, description and grade,
-  a checkbox saved in `localStorage`, and a detail pane with the guide and its
-  sources. Filters by kind (story 18 / activity 26 / collectible 6 / grind 5),
-  grade, missable-only, hide-earned, and free-text search.
-- **Roadmap to the platinum** — 9 stages in play order
-  (2 / 1 / 1 / 1 / 2 / 11 / 14 / 9 / 14 trophies), each with its own progress.
-- **Missable (31)** — every hidden trophy, plus three more whose character or
-  partner may not be around later, each with its roadmap stage.
-- **Spoiler-free story** — with the spoiler setting on, story trophies stay
-  hidden (name, description and guide) until earned.
-- **Export / import** — progress downloads as JSON and imports back.
-- **State in the URL hash** — view, filters, spoiler setting and the selected
-  trophy are all shareable links.
+- **Checklist of all 55 trophies** — official name, description and grade for each, saved in `localStorage`. Tick a trophy off and it stays ticked.
+- **Guide for every trophy, in our own words, with its sources named** — each trophy's detail pane shows the source citation directly under its description and grade badge, before the Guide heading. Sources are the official list on Exophase (name, description, grade) and PSNProfiles where PSN lists a progress target. Where a description names no place or step, the guide says so instead of inventing one.
+- **9-stage roadmap to the platinum** — 2 / 1 / 1 / 1 / 2 / 11 / 14 / 9 / 14 trophies: story chapters in order, then the named missions and stranger strands, activities, heists and one-offs, and the long grinds last.
+- **31 missable trophies flagged** — a trophy is flagged missable when it is tied to a specific story mission, chapter or one-off event. Free-roam and repeatable trophies are not flagged.
+- **Filters** — by kind (story / activity / collectible / grind), grade, missable-only, earned-only, and free-text search across names, descriptions and guides.
+- **Spoiler mode** — hides the names and descriptions of the 28 hidden story trophies until they are earned.
+- **Export / import** — progress exports to a JSON file and imports back. State (view, selected trophy, spoiler) also lives in the URL hash, so a link reopens the same view.
 
-## Sources and honesty
+## The list at a glance
 
-Each trophy's guide is written for this planner from its official description
-alone, and cites its sources directly under the description, before the guide:
-the Exophase GTA VI PS5 trophy list (official name, description, grade) and,
-where PlayStation tracks a count, PSNProfiles (e.g. 42 Shooting Range
-challenges, 500 choices for "Actions Speak Louder"). Where a description names
-no place or step, the guide says so instead of inventing one. No Rockstar
-Games logo or artwork is used; the look is our own.
+55 trophies: 1 platinum, 2 gold, 6 silver, 46 bronze; 28 hidden. Kinds: 18 story, 26 activity, 6 collectible, 5 grind. Counts come only from the trophy descriptions or PSN's own progress targets — 250 stunts, 42 Shooting Range challenges, 20 races, 8 stranger strands, 3 card sets, 100 WAiNK locations, 50 challenges, 3 shops, 100 vehicles, 5 enemies in one Combat Focus, 5 bank vaults, 500 choices, $250,000 laundered, $100,000 spent, 10 vehicles registered.
 
 ## Try it
 
 ```
-node serve.ts   # then open http://localhost:8080
+node serve.ts
 ```
 
-No build step, no network at run time: every file the app loads is under
-`app/`.
+Then open http://localhost:8080 in desktop Chrome.
 
-## Handing it in
+## Hand in
 
 ```
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 ```
 
-`main.ts` copies `app/` and `screenshots/` to the output directory and writes
-`dossier.json` with the kit's vendored `vendor/makefun-frontend.ts`.
-Screenshots (4, first by name is the cover) are listed in `shots.json`.
+`main.ts` copies `app/` and `screenshots/` to the output directory and writes `dossier.json` with the vendored make.fun library. Screenshots (3 or 4, first by name is the cover) are real renders of this app in a browser, listed in `shots.json`.
 
-## Files
+## Sources
 
-- `app/index.html` — page shell: progress, views, toolbar
-- `app/style.css` — the night-drive look
-- `app/app.js` — data loading, filters, spoiler mode, storage, hash state
-- `app/data/trophies.json` — the 55 trophies (11 keys each: id, name,
-  description, grade, kind, missable, hidden, stage, count, guide, source)
-- `main.ts`, `serve.ts`, `shots.json`
+- Exophase — Grand Theft Auto VI trophy list: every official name, description and grade.
+- PSNProfiles — Grand Theft Auto VI trophies: PSN progress targets where listed (42 Shooting Range challenges; 500 choices for Actions Speak Louder).
+- Every guide is written in our own words from the official descriptions alone.
+
+## License
+
+MIT — see `LICENSE`. No Rockstar Games logo, artwork or screenshots are used; the look is our own.

@@ -1,38 +1,48 @@
-// Leonida Roadmap Planner — entry program (Node 22, standard library only).
-// Hands the guide in: copies this repository's app/ and screenshots/ into
-// the output directory and writes /output/dossier.json with the kit's
-// vendored make.fun library, byte for byte the scorer's own copy. Leave
-// vendor/makefun-frontend.ts untouched.
+// Leonida Roadmap Planner — the entry program (Node 22, standard library only).
+// It hands the guide in: app/ (the static guide) and screenshots/ (its 3 or 4
+// renders) are copied from beside this file into the output directory, and
+// dossier.json is written there with the vendored make.fun library, which is
+// the summary the judge reads. vendor/makefun-frontend.ts stays untouched:
+// the scorer rebuilds the dossier with its own identical copy and compares
+// the two byte for byte, so any change to the library would fail the entry.
 //
-// Outside the grader, MAKEFUN_OUTPUT_DIR stands in for /output:
+// The screenshots do not exist yet while the guide is being built, so an
+// early run stops at the dossier step — that is expected, not a bug in the
+// guide. Take the screenshots first, then run this program.
+//
+// Run it outside the grader with:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
-// Screenshots are added after the build, so a missing screenshots/ folder
-// is fine here — the dossier step will refuse until they exist.
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
-const repoRoot = fileURLToPath(new URL('.', import.meta.url));
-const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-const shotsDir = join(outputDir, 'screenshots');
+const here = fileURLToPath(new URL('.', import.meta.url));
+const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-mkdirSync(outputDir, { recursive: true });
-cpSync(join(repoRoot, 'app'), join(outputDir, 'app'), { recursive: true });
-mkdirSync(shotsDir, { recursive: true });
-if (existsSync(join(repoRoot, 'screenshots'))) {
-  cpSync(join(repoRoot, 'screenshots'), shotsDir, { recursive: true });
+// shots.json names the four renders and the view each one shows; the first
+// entry is the cover. It is a note for the maker, read here only to report it.
+const shotsPath = join(here, 'shots.json');
+if (existsSync(shotsPath)) {
+  const shots = JSON.parse(readFileSync(shotsPath, 'utf8'));
+  console.log('shots: ' + shots.map((s) => s.file).join(', '));
 }
 
-// The scorer's own caps: only text_max_bytes shapes the bytes; the rest
-// refuse an entry the scorer would refuse (over 4 screenshots or one over
-// 256 KiB; over 993 files and directories in app/ or 48 MiB of app files).
-const dossier = buildDossier(outputDir, {
-  text_max_bytes: 163840,
-  screenshots: { max: 4, max_bytes: 262144 },
-  app_max_files: 993,
-  app_max_bytes: 50331648,
-});
-writeFileSync(join(outputDir, 'dossier.json'), dossier);
-console.log('Wrote dossier.json (' + dossier.length + ' bytes) to ' + outputDir);
+mkdirSync(out, { recursive: true });
+cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
+mkdirSync(join(out, 'screenshots'), { recursive: true });
+if (existsSync(join(here, 'screenshots'))) {
+  cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
+}
+
+// The scorer's own caps: only text_max_bytes shapes the bytes; the others
+// refuse an entry the scorer would refuse (more than 4 screenshots or one
+// over 256 KiB; more than 993 files and directories in app/ or 48 MiB of app
+// files, counted beside /output's own 1000-entry cap).
+writeFileSync(
+  join(out, 'dossier.json'),
+  buildDossier(out, { text_max_bytes: 163840, screenshots: { max: 4, max_bytes: 262144 }, app_max_files: 993, app_max_bytes: 50331648 }),
+);
+
+console.log('wrote ' + join(out, 'dossier.json'));
